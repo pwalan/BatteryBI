@@ -10,5 +10,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="scala-sdk-2.10.7" level="application" />
     <orderEntry type="library" name="spark-assembly-1.6.0-hadoop2.6.0" level="project" />
+    <orderEntry type="library" name="hbase-server-1.2.6" level="project" />
+    <orderEntry type="library" name="hbase-client-1.2.6" level="project" />
+    <orderEntry type="library" name="hbase-common-1.2.6" level="project" />
   </component>
 </module>
