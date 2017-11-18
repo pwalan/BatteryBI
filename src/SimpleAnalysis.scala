@@ -1,4 +1,6 @@
 import java.text.SimpleDateFormat
+import java.util.Date
+
 
 import org.apache.hadoop.hbase.HBaseConfiguration
 import org.apache.hadoop.hbase.client.{HBaseAdmin, HTable, Put}
@@ -30,7 +32,7 @@ object SimpleAnalysis {
 
     val conf = new SparkConf();
     conf.setAppName("SimpleAnalysis")
-    //conf.setMaster("local[4]")
+    conf.setMaster("local[4]")
 
     val sc = new SparkContext(conf);
     val lines = sc.textFile(input)
@@ -40,11 +42,11 @@ object SimpleAnalysis {
     datas.cache()
     datas.take(10).foreach(println)
 
-    var start = "2015/5/6"
-    var end = "2015/5/6"
-    val sdf = new SimpleDateFormat("yyyy/mm/dd")
-    val startDate = sdf.parse(start)
-    val endDate = sdf.parse(end)
+    var start = "2015/5/5"
+    var end = "2015/5/7"
+    val sdf = new SimpleDateFormat("yyyy/MM/dd")
+    val startDate:Date = sdf.parse(start)
+    val endDate:Date = sdf.parse(end)
 
     //数据完整度
     val validDatas = datas.filter { case (key, value) => {
@@ -68,8 +70,8 @@ object SimpleAnalysis {
     })
 
     //充放电统计
-    //val data = validDatas.reduceByKey(_ + ";" + _)
-    val data = datas.reduceByKey(_ + ";" + _)
+    val data = validDatas.reduceByKey(_ + ";" + _)
+    //val data = datas.reduceByKey(_ + ";" + _)
 
     val result = data.mapValues(x => {
       val values = x.split(";")
